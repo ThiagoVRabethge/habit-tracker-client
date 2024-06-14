@@ -1,94 +1,66 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+
+import api from '@/services/api';
+import 'bootstrap/dist/css/bootstrap.css';
+import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Home() {
+  const [login, setLogin] = useState();
+
+  const [password, setPassword] = useState();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    api
+      .post("/login", {
+        "login": login,
+        "password": password
+      })
+      .then((response) => {
+        console.log("success");
+      })
+  }
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className="container d-flex vh-100 vw-100 justify-content-center align-items-center">
+      <div className="row">
+        <div className="col-6 mb-3">
+          <h3>Entrar</h3>
         </div>
-      </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+        <form onSubmit={(e) => handleLogin(e)}>
+          <div className="mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="login"
+              onChange={(e) => setLogin(e.target.value)}
+            />
+          </div>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+          <div className="mb-3">
+            <input
+              type="password"
+              className="form-control"
+              placeholder="senha"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+          <div>
+            <div className="mb-3">
+              <Link href="/">
+                Ainda não possui uma conta?
+              </Link>
+            </div>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+            <button className="btn btn-sm btn-success">
+              Login
+            </button>
+          </div>
+        </form>
       </div>
     </main>
   );
