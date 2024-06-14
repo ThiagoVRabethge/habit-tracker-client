@@ -51,7 +51,7 @@ export default function Home() {
 
           <div>
             <div className="mb-3">
-              <Link href="/">
+              <Link href="/Register">
                 Ainda não possui uma conta?
               </Link>
             </div>
